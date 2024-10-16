@@ -1,10 +1,15 @@
 <template>
     <div class="document-container">
         <div class="document-wrapper">
-            <h1>{{ details.firstName }} {{ details.lastName }}</h1> 
-            <h2>{{ details.jobTitle }}</h2> 
-            <p>{{ contactInfo }}</p>
-            <!-- <p>{{ details.city }}{{ details.country }}{{ details.phone }}{{ details.email }}</p> -->
+            <div class="document-header">
+                <h1>{{ details.firstName }} {{ details.lastName }}</h1> 
+                <h2>{{ details.jobTitle }}</h2> 
+                <p>{{ contactInfo }}</p>
+            </div>
+            <div class="document-body">
+                <h2 v-if="summary">Profile</h2>
+                <p>{{ summary }}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -14,7 +19,8 @@
         props: {
             details: {
                 type: Object
-            }
+            },
+            summary: String,
         },
         computed: {
             contactInfo(){
@@ -32,8 +38,15 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 2rem;
+        margin: 2rem 4rem;
         color: black;
+    }
+
+    .document-header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .document-wrapper h1{
@@ -41,11 +54,11 @@
     }
 
     .document-wrapper h2{
-        font-size: 1em;
+        font-size: 0.6em;
     }
 
     .document-wrapper p {
-        font-size: 0.6em;
+        font-size: 0.5em;
     }
 
     /* The page container with an aspect ratio of A4 sized page */

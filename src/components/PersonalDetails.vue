@@ -1,4 +1,3 @@
-
 <template>
     <div class="personal-container">
         <h3>Personal Details</h3>

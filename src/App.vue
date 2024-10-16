@@ -2,9 +2,13 @@
   <section class="editor-container">
       <h1 class="display-5">Create Resume</h1>
       <personal-details v-model="personalDetails"></personal-details>
+      <summary-component v-model="profSummary"></summary-component>
   </section>
   <section class="preview bg-secondary">
-        <document-preview :details="personalDetails"></document-preview>
+        <document-preview 
+        :details="personalDetails"
+        :summary="profSummary"
+        ></document-preview>
   </section>
 </template>
 
@@ -23,6 +27,7 @@
           country: '',
           city: '',
         },
+        profSummary: '',
       };
     },
     methods: {
@@ -48,7 +53,7 @@
 
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     background-color: rgb(255, 255, 255);
 
     width: 50%;
@@ -58,6 +63,7 @@
 
   .editor-container h1{
     margin-bottom: 1.5rem;
+    align-self: center;
   }
 
   .preview{
