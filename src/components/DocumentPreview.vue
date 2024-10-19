@@ -9,18 +9,33 @@
             <div class="document-body">
                 <h2 v-if="summary">Profile</h2>
                 <p>{{ summary }}</p>
+                <div v-if="experiences && experiences.length > 0">
+                    <h2>Experience</h2>
+                    <div v-for="(experience, index) in experiences" :key="experience.id">
+                        <p><strong>{{ [experience.jobTitle, experience.employer, experience.city].filter(value => value).join(', ') }}</strong></p>
+                        <p>{{ experience.startDate }}{{ experience.startDate || experience.endDate ? ' - ' : '' }}{{ experience.endDate }}</p>
+                        <p>{{ experience.description }}</p>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
 </template>
 
-<script>
+<script> 
     export default {
+        data(){
+            return {
+                options: { year: 'numeric', month: 'long' },
+            };
+        },
         props: {
             details: {
                 type: Object
             },
             summary: String,
+            experiences: Array,
         },
         computed: {
             contactInfo(){
@@ -69,5 +84,9 @@
         background-color: white;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         overflow: hidden;
+    }
+
+    .document-body {
+        align-self: flex-start;
     }
 </style>

@@ -23,7 +23,6 @@
 
 <style>
     .summary-container {
-        margin-top: 3rem;
         width: 100%;
     }
 

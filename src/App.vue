@@ -3,11 +3,15 @@
       <h1 class="display-5">Create Resume</h1>
       <personal-details v-model="personalDetails"></personal-details>
       <summary-component v-model="profSummary"></summary-component>
+      <experience-editor v-model:experiences="experiences"
+        @delete-experience="deleteExperience"></experience-editor>
+        <button @click="printDetails">Print</button>
   </section>
   <section class="preview bg-secondary">
         <document-preview 
         :details="personalDetails"
         :summary="profSummary"
+        :experiences="experiences"
         ></document-preview>
   </section>
 </template>
@@ -28,11 +32,15 @@
           city: '',
         },
         profSummary: '',
+        experiences: [],
       };
     },
     methods: {
       printDetails(){
-       console.log(this.personalDetails);
+       console.log(this.experiences);
+      },
+      deleteExperience(deleteId){
+        this.experiences = this.experiences.filter(exp => exp.id != deleteId);
       },
     }
   };
@@ -54,6 +62,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    row-gap: 3rem;
     background-color: rgb(255, 255, 255);
 
     width: 50%;
