@@ -2,6 +2,7 @@
     <div class="document-container">
         <div class="document-wrapper">
             <div class="document-header">
+                <img v-show="photo" :src="photo">
                 <h1>{{ details.firstName }} {{ details.lastName }}</h1> 
                 <h2>{{ details.jobTitle }}</h2> 
                 <p>{{ contactInfo }}</p>
@@ -45,6 +46,7 @@
             details: {
                 type: Object
             },
+            photo: String,
             summary: String,
             experiences: Array,
             educations: Array,
@@ -74,6 +76,14 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    .document-header img{
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 0.5rem;
+        border-radius: 50%;
+        object-fit: cover;
     }
 
     .document-wrapper h1{

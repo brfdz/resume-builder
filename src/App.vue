@@ -1,7 +1,9 @@
 <template>
   <section class="editor-container">
       <h1 class="display-5">Create Resume</h1>
-      <personal-details v-model="personalDetails"></personal-details>
+      <personal-details 
+        v-model="personalDetails"
+        v-model:photo="photo"></personal-details>
       <summary-component v-model="profSummary"></summary-component>
       <experience-editor v-model:experiences="experiences"
         @delete-experience="deleteExperience"></experience-editor>
@@ -11,6 +13,7 @@
   <section class="preview bg-secondary">
         <document-preview 
         :details="personalDetails"
+        :photo="photo"
         :summary="profSummary"
         :experiences="experiences"
         :educations="educations"
@@ -25,7 +28,6 @@
         personalDetails: 
         {
           jobTitle: '',
-          photo: '',
           firstName: '',
           lastName: '',
           email: '',
@@ -36,6 +38,7 @@
         profSummary: '',
         experiences: [],
         educations: [],
+        photo: null,
       };
     },
     methods: {

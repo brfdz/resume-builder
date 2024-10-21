@@ -5,8 +5,7 @@
             type="text" class="form-control bg-secondary-subtle"
             :id="field" 
             :value="modelValue"
-            @input="$emit('update:modelValue', $event.target.value)"
-            :disabled="label =='Photo'"> 
+            @input="$emit('update:modelValue', $event.target.value)"> 
     </div>
 </template>
 
