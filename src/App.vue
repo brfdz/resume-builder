@@ -5,13 +5,15 @@
       <summary-component v-model="profSummary"></summary-component>
       <experience-editor v-model:experiences="experiences"
         @delete-experience="deleteExperience"></experience-editor>
-        <button @click="printDetails">Print</button>
+        <education-editor v-model:educations="educations"
+        @delete-education="deleteEducation"></education-editor>
   </section>
   <section class="preview bg-secondary">
         <document-preview 
         :details="personalDetails"
         :summary="profSummary"
         :experiences="experiences"
+        :educations="educations"
         ></document-preview>
   </section>
 </template>
@@ -33,6 +35,7 @@
         },
         profSummary: '',
         experiences: [],
+        educations: [],
       };
     },
     methods: {
@@ -41,6 +44,9 @@
       },
       deleteExperience(deleteId){
         this.experiences = this.experiences.filter(exp => exp.id != deleteId);
+      },
+      deleteEducation(deleteId){
+        this.educations = this.educations.filter(edu => edu.id != deleteId);
       },
     }
   };

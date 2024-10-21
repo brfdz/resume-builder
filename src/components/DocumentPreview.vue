@@ -9,6 +9,7 @@
             <div class="document-body">
                 <h2 v-if="summary">Profile</h2>
                 <p>{{ summary }}</p>
+                <!-- Experiences section -->
                 <div v-if="experiences && experiences.length > 0">
                     <h2>Experience</h2>
                     <div v-for="(experience, index) in experiences" :key="experience.id">
@@ -18,6 +19,16 @@
                     </div>
                 </div>
                 
+                <!-- Education section -->
+                <div v-if="educations && educations.length > 0">
+                    <h2>Education</h2>
+                    <div v-for="(edu, index) in educations" :key="edu.id">
+                        <p><strong>{{ [edu.degree, edu.school].filter(value => value).join(', ') }}</strong></p>
+                        <p>{{ [edu.city, edu.country].filter(value => value).join(', ') }}</p>
+                        <p>{{ edu.startDate }}{{ edu.startDate || edu.endDate ? ' - ' : '' }}{{ edu.endDate }}</p>
+                        <p>{{ edu.description }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -36,6 +47,7 @@
             },
             summary: String,
             experiences: Array,
+            educations: Array,
         },
         computed: {
             contactInfo(){

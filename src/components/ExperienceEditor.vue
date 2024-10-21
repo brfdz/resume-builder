@@ -4,11 +4,11 @@
         <div class="accordion" id="experienceList">
             <div v-for="(exp, index) in experiences" :key="exp.id" class="accordion-item" >
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + index" aria-expanded="false" :aria-controls="index">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#exp' + index" aria-expanded="false" :aria-controls="'exp' + index">
                     {{ exp.jobTitle ? exp.jobTitle: '(Not specified)' }}
                 </button>
             </h2>
-            <div :id="index" class="accordion-collapse collapse" data-bs-parent="#experienceList">
+            <div :id="'exp' + index" class="accordion-collapse collapse" data-bs-parent="#experienceList">
                 <div class="accordion-body">
                     <experience-component 
                         v-model:job-title="experiences[index].jobTitle"
@@ -23,7 +23,7 @@
             </div>
             </div>
         </div>
-        <button id="button-add" @click="addExperience" class="btn">+ Add Experience</button>
+        <button @click="addExperience" class="btn button-add">+ Add Experience</button>
     </div>
 </template>
 
@@ -71,7 +71,7 @@
         width: 100%;
     }
 
-    #button-add{
+    .button-add{
         color:#0d6efd;
         background-color: white;
         font-weight: 500;
@@ -79,12 +79,12 @@
         margin: 1rem 0;
     }
 
-    #button-add:hover {
+    .button-add:hover {
         color: #0d6efd;
         background-color: #0d6dfd1b;
     }
 
-    #button-add:active {
+    .button-add:active {
         border-color: white;
         color: #0d6efd;
         background-color: white;
