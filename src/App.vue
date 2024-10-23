@@ -10,7 +10,7 @@
         <education-editor v-model:educations="educations"
         @delete-education="deleteEducation"></education-editor>
   </section>
-  <section class="preview bg-secondary">
+  <section class="preview">
         <document-preview 
         :details="personalDetails"
         :photo="photo"
@@ -90,6 +90,8 @@
     top:0;
     bottom: 0;
     width:50%;
-    padding: 2rem 5rem;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background-color: #6d7387;
   }
 </style>
