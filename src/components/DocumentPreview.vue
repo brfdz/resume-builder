@@ -98,7 +98,8 @@
         height: 297mm;
         padding: 15mm 20mm; /* for preview */
         transform: scale(0.6);
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
         transform-origin: top center;
         background-color: white;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -111,6 +112,8 @@
         align-items: center;
         color: black;
         width: 100%;
+        white-space: normal;
+        overflow-wrap: break-word;
     }
 
     .document-header {
