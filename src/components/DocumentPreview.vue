@@ -74,6 +74,7 @@
                     html2canvas: {
                         scale: 3, //resolution scale
                         useCORS: false, // Handle images from external sources
+                        scrollY: 0,
                     },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
@@ -114,6 +115,7 @@
         width: 100%;
         white-space: normal;
         overflow-wrap: break-word;
+        font-family: Arial, sans-serif;
     }
 
     .document-header {
@@ -134,27 +136,29 @@
 
     .document-wrapper h1{
         font-size: 1.7em;
+        text-align: center;
     }
 
     .document-wrapper h2{
         font-size: 1.3em;
+        text-align: left;
     }
 
     .document-wrapper h3{
         font-size: 1.1em;
+        text-align: center;
     }
 
     .document-wrapper p {
         font-size: 0.7em;
+        text-align: justify;
+        margin: 0;
     }
 
     .document-body {
         align-self: flex-start;
         color:black;
-    }
-
-    .document-body p{
-        margin-bottom: 5px;
+        width: 100%;
     }
 
     .experience-container{
