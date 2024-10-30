@@ -4,16 +4,16 @@ import { createApp } from 'vue'
 import App from './App.vue'
 
 import DocumentPreview from './components/DocumentPreview.vue';
-import PersonalDetails from './components/PersonalDetails.vue';
-import InputField from './components/InputField.vue';
-import SummaryComponent from './components/SummaryComponent.vue';
-import ExperienceEditor from './components/ExperienceEditor.vue';
-import ExperienceComponent from './components/ExperienceComponent.vue';
-import EducationComponent from './components/EducationComponent.vue';
-import EducationEditor from './components/EducationEditor.vue';
+import PersonalDetails from './components/editor/PersonalDetails.vue';
+import InputField from './components/editor/InputField.vue';
+import SummaryComponent from './components/editor/SummaryComponent.vue';
+import ExperienceEditor from './components/editor/ExperienceEditor.vue';
+import ExperienceComponent from './components/editor/ExperienceComponent.vue';
+import EducationComponent from './components/editor/EducationComponent.vue';
+import EducationEditor from './components/editor/EducationEditor.vue';
 
-import BaseInput from './components/BaseInput.vue';
-import BaseInputGroup from './components/BaseInputGroup.vue';
+import BaseInput from './components/editor/BaseInput.vue';
+import BaseInputGroup from './components/editor/BaseInputGroup.vue';
 
 const app = createApp(App);
 
