@@ -74,7 +74,6 @@
                     html2canvas: {
                         scale: 3, //resolution scale
                         useCORS: false, // Handle images from external sources
-                        scrollY: 0,
                     },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };

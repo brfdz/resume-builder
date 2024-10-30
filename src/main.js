@@ -12,6 +12,9 @@ import ExperienceComponent from './components/ExperienceComponent.vue';
 import EducationComponent from './components/EducationComponent.vue';
 import EducationEditor from './components/EducationEditor.vue';
 
+import BaseInput from './components/BaseInput.vue';
+import BaseInputGroup from './components/BaseInputGroup.vue';
+
 const app = createApp(App);
 
 app.component('personal-details', PersonalDetails);
@@ -22,5 +25,8 @@ app.component('experience-editor', ExperienceEditor);
 app.component('experience-component', ExperienceComponent);
 app.component('education-component', EducationComponent);
 app.component('education-editor', EducationEditor);
+
+app.component('base-input', BaseInput);
+app.component('base-input-group', BaseInputGroup);
 
 app.mount('#app');
