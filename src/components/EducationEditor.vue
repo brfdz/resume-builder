@@ -4,22 +4,16 @@
         <div class="accordion" id="educationList">
             <div v-for="(education, index) in educations" :key="education.id" class="accordion-item" >
             <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#edu' + education.id" aria-expanded="false" :aria-controls="'edu' + education.id">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + education.id" aria-expanded="false" :aria-controls="education.id">
                     {{ education.school || education.degree ? [education.degree, education.school].filter(value => value).join(', '): '(Not specified)' }}
                 </button>
             </h2>
-            <div :id="'edu' + education.id" class="accordion-collapse collapse" data-bs-parent="#educationList">
+            <div :id="education.id" class="accordion-collapse collapse" data-bs-parent="#educationList">
                 <div class="accordion-body">
-                    <education-component 
-                        v-model:degree="educations[index].degree"
-                        v-model:school="educations[index].school"
-                        v-model:start-date="educations[index].startDate"
-                        v-model:end-date="educations[index].endDate"
-                        v-model:city="educations[index].city"
-                        v-model:country="educations[index].country"
-                        v-model:description="educations[index].description"
-                        @delete-education="deleteEducation(education.id)"
-                        ></education-component>
+                    <education-component
+                        :groupId="education.Id"
+                        :groupIndex="index">
+                    </education-component>
                 </div>
             </div>
             </div>
@@ -30,16 +24,13 @@
 
 <script>
     export default {
-        props: {
-            educations: {
-                type: Array,
-                default: [],
-            }
+        inject: ['educations'],
+        provide(){
+            return {
+                updateEducationValue: this.updateEducationValue,
+                deleteEducation: this.deleteEducation,
+            };
         },
-        emits:[
-            'delete-education',
-            'update:educations'
-        ],
         data(){
             return{
                 idCounter: 0,
@@ -47,21 +38,23 @@
         },        
         methods: {
             addEducation(){
-                const education = {
-                        id: this.idCounter++,
-                        degree: '',
+                const newEducation = {
+                        id: 'edu' + this.idCounter++,
                         school: '',
+                        degree: '',
                         startDate: '',
                         endDate: '',
                         city: '',
                         country: '',
                         description: ''
                     };
-                this.educations.push(education);
-                this.$emit('update:educations', this.educations);    
+                this.educations.push(newEducation);
             },
-            deleteEducation(deleteId){
-                this.$emit('delete-education', deleteId);
+            updateEducationValue(value, inputTitle, index){
+                this.educations[index][inputTitle] = value;
+            },
+            deleteEducation(deleteIndex){
+                this.educations.splice(deleteIndex, 1);
             }
         },
     }

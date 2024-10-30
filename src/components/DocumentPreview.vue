@@ -150,7 +150,7 @@
 
     .document-wrapper p {
         font-size: 0.7em;
-        text-align: justify;
+        /* text-align: justify; */
         margin: 0;
     }
 

@@ -5,10 +5,8 @@
         v-model="personalDetails"
         v-model:photo="photo"></personal-details>
       <summary-component v-model="profSummary"></summary-component>
-      <experience-editor v-model:experiences="experiences"
-        @delete-experience="deleteExperience"></experience-editor>
-        <education-editor v-model:educations="educations"
-        @delete-education="deleteEducation"></education-editor>
+      <experience-editor></experience-editor>
+      <education-editor></education-editor>
   </section>
   <section class="preview">
         <document-preview 
@@ -41,17 +39,6 @@
         photo: null,
       };
     },
-    methods: {
-      printDetails(){
-       console.log(this.experiences);
-      },
-      deleteExperience(deleteId){
-        this.experiences = this.experiences.filter(exp => exp.id != deleteId);
-      },
-      deleteEducation(deleteId){
-        this.educations = this.educations.filter(edu => edu.id != deleteId);
-      },
-    }
   };
 
 </script>
@@ -62,11 +49,11 @@
   }
   .editor-container{
     position: fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    overflow-y:auto;
-    overflow-x:hidden;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     display: flex;
     flex-direction: column;

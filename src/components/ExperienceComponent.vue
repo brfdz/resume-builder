@@ -1,73 +1,46 @@
 <template>
-    <div class="experience">
-        <div class="input-container">
-            <label for="jobTitle" class="form-label">Job Title</label>
-            <input @input="$emit('update:jobTitle', $event.target.value)" 
-                id="jobTitle" type="text" class="form-control bg-secondary-subtle"/>
+     <base-input-group>
+        <base-input :inputId="jobTitleId" @update-value="updateExperienceValue($event, 'jobTitle', groupIndex)">Job Title</base-input>
+        <base-input :inputId="employerId" @update-value="updateExperienceValue($event, 'employer', groupIndex)">Employer</base-input>
+        <base-input :inputId="startId" inputType="month" @update-value="updateDateValue($event, 'startDate')">Start Date</base-input>
+        <base-input :inputId="endId" inputType="month" @update-value="updateDateValue($event,'endDate')">End Date</base-input>
+        <base-input :inputId="cityId" @update-value="updateExperienceValue($event, 'city', groupIndex)">City</base-input>
+        <base-input :inputId="countryId" @update-value="updateExperienceValue($event, 'country', groupIndex)">Country</base-input>
+        <div class="experience-description">
+            <label :for="descriptionId" class="form-label">Description</label>
+            <textarea 
+                @input="updateExperienceValue($event.target.value, 'description', groupIndex)"
+                :id="descriptionId"
+                class="form-control bg-secondary-subtle" 
+                rows="4"></textarea>
         </div>
-        <div class="input-container">
-            <label for="employer" class="form-label">Employer</label>
-            <input @input="$emit('update:employer', $event.target.value)" 
-                id="employer" type="text" class="form-control bg-secondary-subtle"/>
-        </div>
-        <div class="input-container">
-            <label for="dates" class="form-label">Start & End Dates</label>
-            <div class="input-dates-container">
-                <input @input="$emit('update:startDate', formattedStartDate)"
-                    id="dates" type="month" class="form-control bg-secondary-subtle" 
-                    v-model="startDate" />
-                <input @input="$emit('update:endDate', formattedEndDate)"
-                    id="dates" type="month" class="form-control bg-secondary-subtle"
-                    v-model="endDate"/>
-            </div>
-        </div>
-        <div class="input-container">
-            <label for="city" class="form-label">City</label>
-            <input @input="$emit('update:city', $event.target.value)"
-                id="city" type="text" class="form-control bg-secondary-subtle"/>
-        </div>
-        <div class="input-desc">
-            <label for="desc" class="form-label">Description</label>
-            <textarea @input="$emit('update:description', $event.target.value)"
-                id="desc" class="form-control bg-secondary-subtle" rows="4"></textarea>
-        </div>
-        <button class="btn btn-dark" @click="$emit('delete-experience')">Delete</button>
-    </div>
+        <button class="btn btn-dark" @click="deleteExperience(groupIndex)">Delete</button>
+    </base-input-group> 
 </template>
 
 <script>
     export default {
-        emits: ['update:jobTitle',
-                'update:employer',
-                'update:startDate',
-                'update:endDate',
-                'update:city',
-                'update:description',
-                'delete-experience'
-        ],
+        props: ['groupId', 'groupIndex'],
+        inject: ['updateExperienceValue', 'deleteExperience'],
         data(){
             return{
-                startDate: '',
-                endDate: '',
+                jobTitleId: 'jobTitle' + this.groupId,
+                employerId: 'employer' + this.groupId,
+                startId: 'startDate' + this.groupId,
+                endId: 'endDate' + this.groupId,
+                cityId: 'city' + this.groupId,
+                countryId: 'country' + this.groupId,
+                descriptionId: 'description' + this.groupId,
             };
         },
-        computed: {
-            formattedStartDate(){
-                if (this.startDate) {
-                    return this.formatDate(this.startDate);
-                } else {
-                    return '';
-                }
-            },
-            formattedEndDate(){
-                if (this.endDate) {
-                    return this.formatDate(this.endDate);
-                } else {
-                    return '';
-                }
-            }
-        },
         methods: {
+            updateDateValue(value, field){
+                if (!value){
+                    return;
+                } 
+                const formattedDate = this.formatDate(value);
+                this.updateExperienceValue(formattedDate, field, this.groupIndex);
+            },
             formatDate(inputDate){
                 const [year, month] = inputDate.split('-');
                 const date = new Date(year, month - 1);  
@@ -78,31 +51,9 @@
     }
 </script>
 
-<style>
-    .experience{
-        display: flex;
-        flex-flow: wrap;
-    }
-
-    .input-container {
-        flex: 0 0 calc(50% - 20px);
-        margin: 0.5rem auto;
-        margin-left: 0;
-    }
-
-    .input-desc {
+<style scoped>
+    .experience-description{
         width: 100%;
         margin-bottom: 0.5rem;
-    }
-
-    .input-dates-container{
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        row-gap: 10px;
-    }
-
-    #dates{
-        font-size: small;
     }
 </style>
