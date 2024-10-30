@@ -5,7 +5,6 @@ import App from './App.vue'
 
 import DocumentPreview from './components/DocumentPreview.vue';
 import PersonalDetails from './components/editor/PersonalDetails.vue';
-import InputField from './components/editor/InputField.vue';
 import SummaryComponent from './components/editor/SummaryComponent.vue';
 import ExperienceEditor from './components/editor/ExperienceEditor.vue';
 import ExperienceComponent from './components/editor/ExperienceComponent.vue';
@@ -19,7 +18,6 @@ const app = createApp(App);
 
 app.component('personal-details', PersonalDetails);
 app.component('document-preview', DocumentPreview);
-app.component('input-field', InputField);
 app.component('summary-component', SummaryComponent);
 app.component('experience-editor', ExperienceEditor);
 app.component('experience-component', ExperienceComponent);

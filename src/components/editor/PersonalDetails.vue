@@ -1,57 +1,45 @@
 <template>
     <div class="personal-container">
         <h3>Personal Details</h3>
-        <div class="personal-inputs">
-            <!-- Photo input -->
-            <div class="input-field input-container">
-                <label for="photo" class="form-label">Photo</label>
-                <div class="photo-edit-container">
-                    <input type="file" accept="image/*"
-                    class="form-control bg-secondary-subtle"
-                    id="photo-input" 
-                    ref="photoInput"
-                    @change="handlePhotoUpload($event)"> 
-                    <button v-show="photoFile" class="remove-photo btn btn-outline-danger"
-                        @click="removePhoto">X</button>
-                </div>
-            </div>
-            <!-- other personal details inputs -->
-            <div class="input-container" 
-            v-for="(value, key) in localDetails" :key="key">
-              <input-field
-                v-model="localDetails[key]"
-                :field="key"
-                :label="formatLabel(key)"
-               ></input-field>
-            </div>
-        </div>
+            <base-input-group>
+                <!-- Photo input -->
+                 <base-input>
+                    Photo
+                    <template #input>
+                        <div class="photo-edit-container">
+                            <input type="file" accept="image/*"
+                                class="form-control bg-secondary-subtle"
+                                id="photo-input" 
+                                ref="photoInput"
+                                @change="handlePhotoUpload($event)"> 
+                            <button v-show="photoFile" class="remove-photo btn btn-outline-danger"
+                                @click="removePhoto">X</button>
+                        </div>
+                    </template>
+                </base-input>
+                <!-- other personal details inputs -->
+                <base-input v-for="(item, key) in personalDetails" :key="key"
+                    :inputId="key" @update-value="setPersonalValue($event, key)">
+                        {{ formatLabel(key) }}
+                </base-input>
+            </base-input-group>
+        
     </div>
 </template>
 
 <script>
     export default {
-        props: {
-            modelValue: Object
-        },
-        emits: ['update:modelValue',
-                'update:photo'
-        ],
+        inject: ['personalDetails'],
+        emits: ['update:photo'],
         data(){
             return{
                 photoFile: null,
             };
         },
-        computed: {
-            localDetails: {
-                get(){
-                    return this.modelValue;
-                },
-                set(value){
-                    this.$emit('update:modelValue', value);
-                }
-            }
-        },
         methods: {
+            setPersonalValue(value, field){
+                this.personalDetails[field] = value;
+            },
             handlePhotoUpload(e){
                 this.photoFile = e.target.files[0];
                 this.$emit('update:photo',URL.createObjectURL(this.photoFile));
@@ -71,21 +59,11 @@
     };
 </script>
 
-<style>
-    .personal-inputs{
-        display: flex;
-        flex-flow: wrap;
-    }
-
-    .input-container {
-        flex: 0 0 calc(50% - 20px);
-        margin: 0.5rem auto;
-        margin-left: 0;
-    }
-
+<style scoped>  
     .photo-edit-container{
         display: flex;
         column-gap: 5px;
+        height: 3rem;
     }
 
     .form-control[type=file]::file-selector-button {

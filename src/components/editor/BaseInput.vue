@@ -3,11 +3,13 @@
         <label class="form-label" :for="inputId">
             <slot></slot>
         </label>
-        <input class="form-control bg-secondary-subtle"
-        :type="inputType"
-        :id="inputId"
-        :name="inputId"
-        @input="$emit('update-value', $event.target.value)"/>
+        <slot name="input">
+            <input class="form-control bg-secondary-subtle"
+            :type="inputType"
+            :id="inputId"
+            :name="inputId"
+            @input="$emit('update-value', $event.target.value)"/>
+        </slot>
     </div>
 </template>
 
@@ -20,7 +22,6 @@
            },
            inputId:{
             type: String,
-            required: true,
            },
         },
         emits:['update-value'],

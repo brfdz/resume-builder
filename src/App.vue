@@ -1,9 +1,7 @@
 <template>
   <section class="editor-container">
       <h1 class="display-5">Create Resume</h1>
-      <personal-details 
-        v-model="personalDetails"
-        v-model:photo="photo"></personal-details>
+      <personal-details v-model:photo="photo"></personal-details>
       <summary-component v-model="profSummary"></summary-component>
       <experience-editor></experience-editor>
       <education-editor></education-editor>
@@ -20,7 +18,15 @@
 </template>
 
 <script>
-  export default {
+
+export default {
+    provide() {
+      return {
+        experiences: this.experiences,
+        educations: this.educations,
+        personalDetails: this.personalDetails,
+      };
+    },
     data() {
       return {
         personalDetails: 
@@ -30,8 +36,8 @@
           lastName: '',
           email: '',
           phone: '',
-          country: '',
           city: '',
+          country: '',
         },
         profSummary: '',
         experiences: [],
