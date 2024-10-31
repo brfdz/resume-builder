@@ -8,7 +8,7 @@
                         {{ education.school || education.degree ? [education.degree, education.school].filter(value => value).join(', '): '(Not specified)' }}
                     </button>
                     <!-- delete button -->
-                    <base-button btnType="delete" @click="deleteEducation(index)">X</base-button>
+                    <base-button btnType="delete" @click="deleteEducation(index)" title="Delete">X</base-button>
                 </h2>
                 <div :id="education.id" class="accordion-collapse collapse" data-bs-parent="#educationList">
                     <div class="accordion-body">
@@ -57,7 +57,10 @@
                 this.educations[index][inputTitle] = value;
             },
             deleteEducation(deleteIndex){
-                this.educations.splice(deleteIndex, 1);
+                const confirmed = confirm("Are you sure you want to delete this item?");
+                if(confirmed){
+                    this.educations.splice(deleteIndex, 1);
+                }
             }
         },
     }

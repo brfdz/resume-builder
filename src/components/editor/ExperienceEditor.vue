@@ -7,7 +7,7 @@
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + exp.id" aria-expanded="false" :aria-controls="exp.id">
                     {{ exp.jobTitle ? exp.jobTitle: '(Not specified)' }}
                 </button>
-                <base-button btnType="delete" @click="deleteExperience(index)">X</base-button>
+                <base-button btnType="delete" @click="deleteExperience(index)" title="Delete">X</base-button>
             </h2>
             <div :id="exp.id" class="accordion-collapse collapse" data-bs-parent="#experienceList">
                 <div class="accordion-body">
@@ -56,7 +56,10 @@
                 this.experiences[index][inputTitle] = value;
             },
             deleteExperience(deleteIndex){
-                this.experiences.splice(deleteIndex, 1);
+                const confirmed = confirm("Are you sure you want to delete this item?");
+                if(confirmed){
+                    this.experiences.splice(deleteIndex, 1);
+                }
             }
         },
     }

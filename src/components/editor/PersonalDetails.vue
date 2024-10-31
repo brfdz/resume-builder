@@ -12,7 +12,7 @@
                                 id="photo-input" 
                                 ref="photoInput"
                                 @change="handlePhotoUpload($event)"> 
-                            <base-button v-show="photoFile" btnType="delete" @click="removePhoto">X</base-button>
+                            <base-button v-show="photoFile" btnType="delete" @click="removePhoto" title="Delete">X</base-button>
                         </div>
                     </template>
                 </base-input>
@@ -44,10 +44,13 @@
                 this.$emit('update:photo',URL.createObjectURL(this.photoFile));
             },
             removePhoto(){
-                URL.revokeObjectURL(this.photoFile);
-                this.photoFile = null;
-                this.$emit('update:photo', null);
-                this.$refs.photoInput.value = null; // Clear file input
+                const confirmed = confirm("Are you sure you want to delete photo?");
+                if(confirmed){
+                    URL.revokeObjectURL(this.photoFile);
+                    this.photoFile = null;
+                    this.$emit('update:photo', null);
+                    this.$refs.photoInput.value = null; // Clear file input
+                }
             },
             formatLabel(text) {
                 // format the input label from camel case to title case

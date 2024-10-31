@@ -7,7 +7,7 @@
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + skillItem.id" aria-expanded="false" :aria-controls="skillItem.id">
                     {{ skillItem.name ? skillItem.name: '(Not specified)' }}
                     </button>
-                    <base-button btnType="delete" @click="deleteSkill(index)">X</base-button>
+                    <base-button btnType="delete" @click="deleteSkill(index)" title="Delete">X</base-button>
                 </h2>
                 <div :id="skillItem.id" class="accordion-collapse collapse" data-bs-parent="#skillList">
                     <div class="accordion-body">
@@ -55,7 +55,10 @@ import SkillInputGroup from './SkillInputGroup.vue';
                 this.skills[index][field] = value;
             },
             deleteSkill(deleteIndex){
-                this.skills.splice(deleteIndex, 1);
+                const confirmed = confirm("Are you sure you want to delete this item?");
+                if(confirmed){
+                    this.skills.splice(deleteIndex, 1);
+                }
             },
         },
     }
