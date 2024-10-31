@@ -7,6 +7,7 @@
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + exp.id" aria-expanded="false" :aria-controls="exp.id">
                     {{ exp.jobTitle ? exp.jobTitle: '(Not specified)' }}
                 </button>
+                <base-button btnType="delete" @click="deleteExperience(index)">X</base-button>
             </h2>
             <div :id="exp.id" class="accordion-collapse collapse" data-bs-parent="#experienceList">
                 <div class="accordion-body">
@@ -18,7 +19,9 @@
             </div>
             </div>
         </div>
-        <button @click="addExperience" class="btn button-add">+ Add Experience</button>
+        <base-button btnType="add" @click="addExperience">
+            + Add Experience
+        </base-button>
     </div>
 </template>
 
@@ -28,7 +31,6 @@
         provide(){
             return {
                 updateExperienceValue: this.updateExperienceValue,
-                deleteExperience: this.deleteExperience,
             };
         },
         data(){
@@ -64,23 +66,7 @@
     .experience-editor {
         width: 100%;
     }
-
-    .button-add{
-        color:#0d6efd;
-        background-color: white;
-        font-weight: 500;
-        width: 100%;
-        margin: 1rem 0;
-    }
-
-    .button-add:hover {
-        color: #0d6efd;
-        background-color: #0d6dfd1b;
-    }
-
-    .button-add:active {
-        border-color: white;
-        color: #0d6efd;
-        background-color: white;
+    .accordion-header{
+        display: flex;
     }
 </style>

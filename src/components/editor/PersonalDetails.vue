@@ -12,8 +12,7 @@
                                 id="photo-input" 
                                 ref="photoInput"
                                 @change="handlePhotoUpload($event)"> 
-                            <button v-show="photoFile" class="remove-photo btn btn-outline-danger"
-                                @click="removePhoto">X</button>
+                            <base-button v-show="photoFile" btnType="delete" @click="removePhoto">X</base-button>
                         </div>
                     </template>
                 </base-input>
@@ -61,9 +60,14 @@
 
 <style scoped>  
     .photo-edit-container{
-        display: flex;
-        column-gap: 5px;
         height: 3rem;
+        display: flex;
+        align-items: center;
+        column-gap: 5px;
+    }
+
+    .photo-edit-container input {
+        height: 100%;
     }
 
     .form-control[type=file]::file-selector-button {

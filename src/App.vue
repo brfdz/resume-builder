@@ -5,26 +5,24 @@
       <summary-component v-model="profSummary"></summary-component>
       <experience-editor></experience-editor>
       <education-editor></education-editor>
+      <skill-editor></skill-editor>
   </section>
   <section class="preview">
         <document-preview 
-        :details="personalDetails"
         :photo="photo"
         :summary="profSummary"
-        :experiences="experiences"
-        :educations="educations"
         ></document-preview>
   </section>
 </template>
 
 <script>
-
 export default {
     provide() {
       return {
         experiences: this.experiences,
         educations: this.educations,
         personalDetails: this.personalDetails,
+        skills: this.skills
       };
     },
     data() {
@@ -42,6 +40,7 @@ export default {
         profSummary: '',
         experiences: [],
         educations: [],
+        skills: [],
         photo: null,
       };
     },

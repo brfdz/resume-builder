@@ -14,14 +14,13 @@
                 class="form-control bg-secondary-subtle" 
                 rows="4"></textarea>
         </div>
-        <button class="btn btn-dark" @click="deleteExperience(groupIndex)">Delete</button>
     </base-input-group> 
 </template>
 
 <script>
     export default {
         props: ['groupId', 'groupIndex'],
-        inject: ['updateExperienceValue', 'deleteExperience'],
+        inject: ['updateExperienceValue'],
         data(){
             return{
                 jobTitleId: 'jobTitle' + this.groupId,

@@ -3,22 +3,26 @@
         <h3>Education</h3>
         <div class="accordion" id="educationList">
             <div v-for="(education, index) in educations" :key="education.id" class="accordion-item" >
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + education.id" aria-expanded="false" :aria-controls="education.id">
-                    {{ education.school || education.degree ? [education.degree, education.school].filter(value => value).join(', '): '(Not specified)' }}
-                </button>
-            </h2>
-            <div :id="education.id" class="accordion-collapse collapse" data-bs-parent="#educationList">
-                <div class="accordion-body">
-                    <education-component
-                        :groupId="education.Id"
-                        :groupIndex="index">
-                    </education-component>
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + education.id" aria-expanded="false" :aria-controls="education.id">
+                        {{ education.school || education.degree ? [education.degree, education.school].filter(value => value).join(', '): '(Not specified)' }}
+                    </button>
+                    <!-- delete button -->
+                    <base-button btnType="delete" @click="deleteEducation(index)">X</base-button>
+                </h2>
+                <div :id="education.id" class="accordion-collapse collapse" data-bs-parent="#educationList">
+                    <div class="accordion-body">
+                        <education-component
+                            :groupId="education.Id"
+                            :groupIndex="index">
+                        </education-component>
+                    </div>
                 </div>
             </div>
-            </div>
         </div>
-        <button @click="addEducation" class="btn button-add">+ Add Education</button>
+        <base-button btnType="add" @click="addEducation">
+            + Add Education
+        </base-button>
     </div>
 </template>
 
@@ -28,7 +32,6 @@
         provide(){
             return {
                 updateEducationValue: this.updateEducationValue,
-                deleteEducation: this.deleteEducation,
             };
         },
         data(){
@@ -60,8 +63,13 @@
     }
 </script>
 
-<style>
+<style scoped>
     .education-editor {
         width: 100%;
     }
+
+    .accordion-header {
+        display: flex;
+    }
+
 </style>

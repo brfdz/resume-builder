@@ -1,12 +1,12 @@
 <template>
     <div class="preview-container">
-        <button @click="downloadPdf" class="btn btn-primary">Download PDF</button>
+        <base-button @click="downloadPdf">Download PDF</base-button>
         <div class="document-container">
             <div class="document-wrapper" ref="documentPdf">
                 <div class="document-header">
                     <img v-show="photo" :src="photo">
-                    <h1>{{ details.firstName }} {{ details.lastName }}</h1> 
-                    <h3>{{ details.jobTitle }}</h3> 
+                    <h1>{{ personalDetails.firstName }} {{ personalDetails.lastName }}</h1> 
+                    <h3>{{ personalDetails.jobTitle }}</h3> 
                     <p>{{ contactInfo }}</p>
                 </div>
             
@@ -18,7 +18,7 @@
                         <h2>Experience</h2>
                         <div v-for="(experience, index) in experiences" :key="experience.id" class="experience-container">
                             <p><strong>{{ [experience.jobTitle, experience.employer].filter(value => value).join(', ') }}</strong>
-                                &nbsp;{{ experience.city }}</p>
+                                &nbsp;{{ [experience.city, experience.country].filter(value => value).join(', ') }}</p>
                             <p>{{ experience.startDate }}{{ experience.startDate || experience.endDate ? ' - ' : '' }}{{ experience.endDate }}</p>
                             <p>{{ experience.description }}</p>
                         </div>
@@ -34,6 +34,13 @@
                             <p>{{ edu.description }}</p>
                         </div>
                     </div>
+                    <!-- Skill section -->
+                    <div v-if="skills && skills.length >0">
+                        <h2>Skills</h2>
+                        <div v-for="(skillItem, index) in skills" :key="skillItem.id">
+                            {{ [skillItem.name, skillItem.level].filter(value => value).join(', ') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,23 +50,19 @@
 <script> 
     import html2pdf from 'html2pdf.js';
     export default {
+        inject: ['personalDetails','experiences', 'educations', 'skills'],
         data(){
             return {
                 options: { year: 'numeric', month: 'long' },
             };
         },
         props: {
-            details: {
-                type: Object
-            },
             photo: String,
             summary: String,
-            experiences: Array,
-            educations: Array,
         },
         computed: {
             contactInfo(){
-                return [this.details.city, this.details.country, this.details.phone, this.details.email]
+                return [this.personalDetails.city, this.personalDetails.country, this.personalDetails.phone, this.personalDetails.email]
                 .filter(value => value)
                 .join(', ');
             },
@@ -83,7 +86,7 @@
     };
 </script>
 
-<style>
+<style scoped>
     .preview-container{
         display: flex;
         flex-direction: column;
