@@ -74,7 +74,7 @@
     }
 
     .form-control[type=file]::file-selector-button {
-        height: -webkit-fill-available;
+        height: 3rem;
     }
 
     .remove-photo{

@@ -2,8 +2,8 @@
     <base-input-group>
         <base-input :inputId="schoolId" @update-value="updateEducationValue($event, 'school', groupIndex)">School</base-input>
         <base-input :inputId="degreeId" @update-value="updateEducationValue($event, 'degree', groupIndex)">Degree</base-input>
-        <base-input :inputId="startId" inputType="month" @update-value="updateDateValue($event, 'startDate')">Start Date</base-input>
-        <base-input :inputId="endId" inputType="month" @update-value="updateDateValue($event, 'endDate')">End Date</base-input>
+        <base-input :inputId="startId" inputType="month" @update-value="updateEducationValue($event, 'startDate', groupIndex)">Start Date</base-input>
+        <base-input :inputId="endId" inputType="month" @update-value="updateEducationValue($event, 'endDate', groupIndex)">End Date</base-input>
         <base-input :inputId="cityId" @update-value="updateEducationValue($event, 'city', groupIndex)">City</base-input>
         <base-input :inputId="countryId" @update-value="updateEducationValue($event, 'country', groupIndex)">Country</base-input>
         <div class="education-description">
@@ -32,23 +32,6 @@
                 descriptionId: 'description' + this.groupId,
             };
         },
-        methods: {
-            updateDateValue(value, field){
-                if (!value){
-                    value= '';
-                    this.updateEducationValue(null, field, this.groupIndex);
-                    return;
-                } 
-                const formattedDate = this.formatDate(value);
-                this.updateEducationValue(formattedDate, field, this.groupIndex);
-            },
-            formatDate(inputDate){
-                const [year, month] = inputDate.split('-');
-                const date = new Date(year, month - 1);  
-                const options = { year: 'numeric', month: 'short' };
-                return date.toLocaleDateString('en-US', options);
-            },
-        }
     }
 </script>
 
