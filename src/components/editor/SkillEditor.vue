@@ -5,7 +5,7 @@
             <div v-for="(skillItem, index) in skills" :key="skillItem.id" class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="'#' + skillItem.id" aria-expanded="false" :aria-controls="skillItem.id">
-                    {{ skillItem.name ? skillItem.name: '(Not specified)' }}
+                    {{ skillItem.name ? [skillItem.name, skillItem.level].filter(value => value).join(', '): '(Not specified)' }}
                     </button>
                     <base-button btnType="delete" @click="deleteSkill(index)" title="Delete">X</base-button>
                 </h2>
@@ -55,7 +55,7 @@ import SkillInputGroup from './SkillInputGroup.vue';
                 this.skills[index][field] = value;
             },
             deleteSkill(deleteIndex){
-                const confirmed = confirm("Are you sure you want to delete this item?");
+                const confirmed = confirm("Are you sure you want to delete this item? This action cannot be undone.");
                 if(confirmed){
                     this.skills.splice(deleteIndex, 1);
                 }

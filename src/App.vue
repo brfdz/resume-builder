@@ -63,7 +63,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    row-gap: 3rem;
+    row-gap: 2rem;
     background-color: rgb(255, 255, 255);
 
     width: 50%;
@@ -72,10 +72,14 @@ export default {
   }
 
   .editor-container h1{
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    margin: 1rem 0;
     align-self: center;
   }
 
+  .editor-container h3{
+    font-size: 1.3rem;
+  }
   .preview{
     position: fixed;
     right:0;

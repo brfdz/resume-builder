@@ -44,7 +44,7 @@
                 this.$emit('update:photo',URL.createObjectURL(this.photoFile));
             },
             removePhoto(){
-                const confirmed = confirm("Are you sure you want to delete photo?");
+                const confirmed = confirm("Are you sure you want to delete photo? This action cannot be undone.");
                 if(confirmed){
                     URL.revokeObjectURL(this.photoFile);
                     this.photoFile = null;

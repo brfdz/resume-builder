@@ -56,7 +56,7 @@
                 this.experiences[index][inputTitle] = value;
             },
             deleteExperience(deleteIndex){
-                const confirmed = confirm("Are you sure you want to delete this item?");
+                const confirmed = confirm("Are you sure you want to delete this item? This action cannot be undone.");
                 if(confirmed){
                     this.experiences.splice(deleteIndex, 1);
                 }

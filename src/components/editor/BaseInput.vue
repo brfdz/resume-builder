@@ -1,6 +1,6 @@
 <template>
     <div class="base-input">
-        <label class="form-label" :for="inputId">
+        <label class="form-label text-secondary" :for="inputId">
             <slot></slot>
         </label>
         <slot name="input">
@@ -39,5 +39,9 @@
 
     input {
         height: 3rem;
+    }
+
+    label {
+        font-size: 0.9rem;
     }
 </style>

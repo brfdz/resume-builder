@@ -5,42 +5,48 @@
             <div class="document-wrapper" ref="documentPdf">
                 <div class="document-header">
                     <img v-show="photo" :src="photo">
-                    <h1>{{ personalDetails.firstName }} {{ personalDetails.lastName }}</h1> 
-                    <h3>{{ personalDetails.jobTitle }}</h3> 
-                    <p>{{ contactInfo }}</p>
+                    <div class="person-header">
+                        <h1>{{ personalDetails.firstName }} {{ personalDetails.lastName }}</h1> 
+                        <h3>{{ personalDetails.jobTitle }}</h3> 
+                    </div>
+                    <div class="contact">
+                        <p>{{ personalDetails.email }}</p>
+                        <p>{{ personalDetails.phone }}</p>
+                        <p>{{ contactPlace }}</p>
+                    </div>
                 </div>
             
                 <div class="document-body">
-                    <h2 v-if="summary">Profile</h2>
-                    <p style="margin-bottom:20px;">{{ summary }}</p>
-                    <!-- Experiences section -->
-                    <div v-if="experiences && experiences.length > 0" style="margin-bottom:20px;">
-                        <h2>Experience</h2>
-                        <div v-for="(experience, index) in experiences" :key="experience.id" class="experience-container">
-                            <p><strong>{{ [experience.jobTitle, experience.employer].filter(value => value).join(', ') }}</strong>
-                                &nbsp;{{ [experience.city, experience.country].filter(value => value).join(', ') }}</p>
-                            <p>{{ experience.startDate }}{{ experience.startDate || experience.endDate ? ' - ' : '' }}{{ experience.endDate }}</p>
-                            <p>{{ experience.description }}</p>
-                        </div>
-                    </div>
+                    <document-section v-if="summary">
+                        <document-section-entry>{{ summary }}</document-section-entry>
+                    </document-section>
+
+                    <document-section v-if="experiences && experiences.length > 0"
+                    header="Experiences">
+                        <document-section-entry v-for="(experience, index) in experiences" :key="experience.id"
+                            :title="experience.jobTitle" :title-secondary="experience.employer"
+                            :info="experience.city" :info-secondary="experience.country"
+                            :entry-start-date="experience.startDate" :entry-end-date="experience.endDate">
+                                {{ experience.description }}
+                        </document-section-entry>
+                    </document-section>
                     
-                    <!-- Education section -->
-                    <div v-if="educations && educations.length > 0" style="margin-bottom:20px;">
-                        <h2>Education</h2>
-                        <div v-for="(edu, index) in educations" :key="edu.id">
-                            <p><strong>{{ [edu.degree, edu.school].filter(value => value).join(', ') }}</strong>
-                                &nbsp;{{ [edu.city, edu.country].filter(value => value).join(', ') }}</p>
-                            <p>{{ edu.startDate }}{{ edu.startDate || edu.endDate ? ' - ' : '' }}{{ edu.endDate }}</p>
-                            <p>{{ edu.description }}</p>
-                        </div>
-                    </div>
-                    <!-- Skill section -->
-                    <div v-if="skills && skills.length >0">
-                        <h2>Skills</h2>
-                        <div v-for="(skillItem, index) in skills" :key="skillItem.id">
-                            {{ [skillItem.name, skillItem.level].filter(value => value).join(', ') }}
-                        </div>
-                    </div>
+                    <document-section v-if="educations && educations.length > 0"
+                    header="Education">
+                        <document-section-entry v-for="(edu, index) in educations" :key="edu.id"
+                            :title="edu.degree" :title-secondary="edu.school"
+                            :info="edu.city" :info-secondary="edu.country"
+                            :entry-start-date="edu.startDate" :entry-end-date="edu.endDate">
+                                {{ edu.description }}
+                        </document-section-entry>
+                    </document-section>
+                    
+                    <document-section v-if="skills && skills.length >0"
+                    header="Skills">
+                        <document-section-entry v-for="(skillItem, index) in skills" :key="skillItem.id"
+                            :title="skillItem.name" :info="skillItem.level">
+                        </document-section-entry>
+                    </document-section>
                 </div>
             </div>
         </div>
@@ -49,7 +55,14 @@
 
 <script> 
     import html2pdf from 'html2pdf.js';
+    import DocumentSectionEntry from './DocumentSectionEntry.vue';
+    import DocumentSection from './DocumentSection.vue';
+
     export default {
+        components: {
+            DocumentSectionEntry,
+            DocumentSection
+        },
         inject: ['personalDetails','experiences', 'educations', 'skills'],
         data(){
             return {
@@ -61,8 +74,8 @@
             summary: String,
         },
         computed: {
-            contactInfo(){
-                return [this.personalDetails.city, this.personalDetails.country, this.personalDetails.phone, this.personalDetails.email]
+            contactPlace(){
+                return [this.personalDetails.city, this.personalDetails.country]
                 .filter(value => value)
                 .join(', ');
             },
@@ -122,49 +135,46 @@
 
     .document-header {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
+        column-gap: 2rem;
         width: 100%;
+        margin-bottom: 1rem;
     }
 
     .document-header img{
         width: 5em;
         height: 5em;
         object-fit: cover;
-        border-radius: 50%;
-        margin-bottom: 0.5em;
+        border-radius: 10%;
     }
 
-    .document-wrapper h1{
-        font-size: 1.7em;
-        text-align: center;
+    .document-header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.1rem;
     }
 
-    .document-wrapper h2{
-        font-size: 1.3em;
-        text-align: left;
+    .document-header h3 {
+        font-size: 0.9rem;
+    }
+    
+    .document-header p {
+        font-size: 0.6rem;
+        margin-bottom: 0;
     }
 
-    .document-wrapper h3{
-        font-size: 1.1em;
-        text-align: center;
+    .person-header {
+        flex-grow: 1;
     }
 
-    .document-wrapper p {
-        font-size: 0.7em;
-        /* text-align: justify; */
-        margin: 0;
+    .contact {
+        text-align: right;
     }
 
     .document-body {
         align-self: flex-start;
         color:black;
         width: 100%;
-    }
-
-    .experience-container{
-        margin-bottom: 10px;
     }
     
 </style>

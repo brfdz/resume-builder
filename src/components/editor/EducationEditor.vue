@@ -57,7 +57,7 @@
                 this.educations[index][inputTitle] = value;
             },
             deleteEducation(deleteIndex){
-                const confirmed = confirm("Are you sure you want to delete this item?");
+                const confirmed = confirm("Are you sure you want to delete this item? This action cannot be undone.");
                 if(confirmed){
                     this.educations.splice(deleteIndex, 1);
                 }

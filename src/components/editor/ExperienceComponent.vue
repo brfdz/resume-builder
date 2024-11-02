@@ -7,7 +7,7 @@
         <base-input :inputId="cityId" @update-value="updateExperienceValue($event, 'city', groupIndex)">City</base-input>
         <base-input :inputId="countryId" @update-value="updateExperienceValue($event, 'country', groupIndex)">Country</base-input>
         <div class="experience-description">
-            <label :for="descriptionId" class="form-label">Description</label>
+            <label :for="descriptionId" class="form-label text-secondary">Description</label>
             <textarea 
                 @input="updateExperienceValue($event.target.value, 'description', groupIndex)"
                 :id="descriptionId"
@@ -35,15 +35,17 @@
         methods: {
             updateDateValue(value, field){
                 if (!value){
+                    value= '';
+                    this.updateEducationValue(null, field, this.groupIndex);
                     return;
-                } 
+                }
                 const formattedDate = this.formatDate(value);
                 this.updateExperienceValue(formattedDate, field, this.groupIndex);
             },
             formatDate(inputDate){
                 const [year, month] = inputDate.split('-');
                 const date = new Date(year, month - 1);  
-                const options = { year: 'numeric', month: 'long' };
+                const options = { year: 'numeric', month: 'short' };
                 return date.toLocaleDateString('en-US', options);
             },
         }
@@ -54,5 +56,9 @@
     .experience-description{
         width: 100%;
         margin-bottom: 0.5rem;
+    }
+
+    label{
+        font-size: 0.9rem;
     }
 </style>
