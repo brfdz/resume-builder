@@ -1,5 +1,5 @@
 <template>
-  <section class="editor-container">
+  <section class="editor-container" v-show="windowWidth > 1100 || !showPreview">
       <h1 class="display-5">Create Resume</h1>
       <personal-details v-model:photo="photo"></personal-details>
       <summary-component v-model="profSummary"></summary-component>
@@ -7,12 +7,16 @@
       <education-editor></education-editor>
       <skill-editor></skill-editor>
   </section>
-  <section class="preview">
+  <section class="preview" v-show="windowWidth > 1100 || showPreview">
         <document-preview 
         :photo="photo"
         :summary="profSummary"
+        :windowWidth="windowWidth"
         ></document-preview>
   </section>
+  <base-button class="change-view" @click="toggleViews">
+    {{ toggleBtnTitle }}
+  </base-button>
 </template>
 
 <script>
@@ -42,7 +46,28 @@ export default {
         educations: [],
         skills: [],
         photo: null,
+        windowWidth: window.innerWidth,
+        showPreview: false,
       };
+    },
+    methods: {
+      toggleViews(){
+        this.showPreview = !this.showPreview;
+      },
+      onWindowResized(){
+        this.windowWidth = window.innerWidth;
+      }
+    },
+    computed: {
+      toggleBtnTitle(){
+        return this.showPreview ? 'Editor' : 'Preview';
+      },
+    },
+    mounted(){
+      window.addEventListener('resize', this.onWindowResized);
+    },
+    beforeDestroy(){
+      window.removeEventListener('resize', this.onWindowResized);
     },
   };
 
@@ -89,5 +114,44 @@ export default {
     overflow-y:auto;
     overflow-x:hidden;
     background-color: #6d7387;
+  }
+
+  .change-view {
+    display:none;
+    position:fixed;
+    bottom: 3rem;
+    right: 3rem;
+    padding: 8px 25px;
+    opacity: 60%;
+    border-radius: 20px;
+    transition: all .3s
+  }
+
+  /* 
+        Change it to single section view style
+  */
+  @media only screen and (max-width: 1100px) { 
+    .preview {
+      width: 100%;
+      padding-bottom: 10rem;
+      overflow-y: scroll;
+    }
+
+    .editor-container{
+      position: static;
+      width: 1000%;
+      margin: auto;
+      padding: 3rem 10vw;
+      overflow-y: scroll;
+    }
+
+    .change-view {
+      display: block;
+    }
+
+    .change-view:hover {
+      opacity: 100%;
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+    }
   }
 </style>

@@ -48,8 +48,10 @@
                     this.$emit('update-value', formattedDate);
                     return;
                 }
-                // input from browsers that don't support the "month" type or format is closed
-                this.$emit('update-value', value);
+                // format is closed
+                else if(!this.isFormatOpen){
+                    this.$emit('update-value', value);
+                }
             },
             formatDate(inputDate){
                 const [year, month] = inputDate.split('-');
@@ -114,4 +116,11 @@
         height: 1rem;
         /* accent-color:  rgb(209, 30,53); */
     }
+
+    @media only screen and (max-width: 700px) { 
+        .base-input {
+            flex-basis: 100%;
+        }
+    }
+
 </style>

@@ -12,7 +12,7 @@
                 @input="updateEducationValue($event.target.value, 'description', groupIndex)"
                 :id="descriptionId"
                 class="form-control bg-secondary-subtle" 
-                rows="4"></textarea>
+                rows="4" maxlength="2000"></textarea>
         </div>
     </base-input-group>
 </template>

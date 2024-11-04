@@ -1,7 +1,7 @@
 <template>
     <div class="preview-container">
         <base-button @click="downloadPdf">Download PDF</base-button>
-        <div class="document-container">
+        <div class="document-container" :style="{ transform: `scale(${scaleFactor})` }">
             <div class="document-wrapper" ref="documentPdf">
                 <div class="document-header">
                     <img v-show="photo" :src="photo">
@@ -43,9 +43,11 @@
                     
                     <document-section v-if="skills && skills.length >0"
                     header="Skills">
-                        <document-section-entry v-for="(skillItem, index) in skills" :key="skillItem.id"
-                            :title="skillItem.name" :info="skillItem.level">
-                        </document-section-entry>
+                        <template #column-view>
+                            <document-section-entry v-for="(skillItem, index) in skills" :key="skillItem.id" class="col-6"
+                                :title="skillItem.name" :info="skillItem.level">
+                            </document-section-entry>
+                        </template>   
                     </document-section>
                 </div>
             </div>
@@ -67,11 +69,14 @@
         data(){
             return {
                 options: { year: 'numeric', month: 'long' },
+                pixelPerMM: this.getPixelsPerMM(),
             };
+            
         },
         props: {
             photo: String,
             summary: String,
+            windowWidth: Number,
         },
         computed: {
             contactPlace(){
@@ -79,12 +84,21 @@
                 .filter(value => value)
                 .join(', ');
             },
+            scaleFactor(){
+
+                let windowWidthMM = this.windowWidth / this.pixelPerMM;
+                let margin = 50;
+                if(this.windowWidth > 1100){
+                    windowWidthMM /= 2;
+                }
+                return (windowWidthMM - margin) / 210; 
+            }
         },
         methods: {
             downloadPdf(){
                 var document = this.$refs.documentPdf;
                 var opt = {
-                    margin: [10, 20],
+                    margin: [15, 15],
                     filename: 'resume.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
                     html2canvas: {
@@ -95,6 +109,14 @@
                 };
                 html2pdf().set(opt).from(document).save();
             },
+            getPixelsPerMM(){
+                const div = document.createElement('div');
+                div.style.width = '1mm';
+                document.body.appendChild(div);
+                const pixelsPerMM = div.offsetWidth; // Width in pixels
+                document.body.removeChild(div);
+                return pixelsPerMM;
+            }
         },
     };
 </script>
@@ -112,15 +134,14 @@
     .document-container {
         width: 210mm;
         height: 297mm;
-        padding: 15mm 20mm; /* for preview */
-        transform: scale(0.6);
+        padding: 15mm 15mm; /* for preview */
         overflow-y: scroll;
         overflow-x: hidden;
         transform-origin: top center;
         background-color: white;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
     }
+    
     .document-wrapper {
         display: flex;
         flex-direction: column;
@@ -143,23 +164,23 @@
     }
 
     .document-header img{
-        width: 5em;
-        height: 5em;
+        width: 20mm;
+        height: 20mm;
         object-fit: cover;
         border-radius: 10%;
     }
 
     .document-header h1 {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         margin-bottom: 0.1rem;
     }
 
     .document-header h3 {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
     }
     
     .document-header p {
-        font-size: 0.6rem;
+        font-size: 0.75rem;
         margin-bottom: 0;
     }
 

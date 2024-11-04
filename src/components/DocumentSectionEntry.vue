@@ -1,8 +1,13 @@
 <template>
     <div class="entry">
         <div class="head-row">
-            <p><strong>{{ header }}</strong> {{ secondaryHeader }}</p>
-            <p>{{ dates }}</p>
+            <p>
+                <strong>{{ header }}</strong>&ensp;
+                <span>{{ secondaryHeader }}</span>
+            </p>
+            <p v-if="dates">
+                <span>{{ dates }}</span>
+            </p>
         </div>
         <div class="entry-body">
             <p>
@@ -44,6 +49,7 @@
     .entry-body {
         width: 95%;
         justify-self: center;
+        white-space:pre-wrap;
     }
 
     .head-row{
@@ -53,7 +59,15 @@
     }
 
     p {
-        font-size: 0.7em;
+        font-size: 0.8em;
         margin: 0;
+    }
+
+    strong {
+        font-size: 0.85rem;
+    }
+
+    span {
+        color: gray;
     }
 </style>

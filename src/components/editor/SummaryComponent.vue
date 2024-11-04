@@ -4,7 +4,7 @@
         <base-input>
             Your Profile
             <template #input>
-                <textarea class="form-control bg-secondary-subtle" id="summary" rows="4"
+                <textarea class="form-control bg-secondary-subtle" id="summary" rows="4" maxlength="2000"
                     @input="$emit('update:modelValue', $event.target.value)"></textarea>
             </template>
         </base-input>
@@ -27,5 +27,4 @@
     .summary-container {
         width: 100%;
     }
-
 </style>
