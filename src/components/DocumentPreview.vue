@@ -1,6 +1,6 @@
 <template>
     <div class="preview-container">
-        <base-button @click="downloadPdf">Download PDF</base-button>
+        <base-button @click="downloadPdf" class="btn-dark">Download PDF</base-button>
         <div class="document-container" :style="{ transform: `scale(${scaleFactor})` }">
             <div class="document-wrapper" ref="documentPdf">
                 <div class="document-header">
@@ -49,6 +49,14 @@
                             </document-section-entry>
                         </template>   
                     </document-section>
+
+                    <document-section v-for="(section, key) in customSections" :key="section.id"
+                    :header="section.sectionTitle">
+                        <document-section-entry v-for="(item) in section" :key="item.id"
+                        :title="item.title" :info="item.info" :entry-start-date="item.startDate" :entry-end-date="item.endDate">
+                        {{ item.description }}
+                        </document-section-entry>
+                    </document-section>
                 </div>
             </div>
         </div>
@@ -65,7 +73,7 @@
             DocumentSectionEntry,
             DocumentSection
         },
-        inject: ['personalDetails','experiences', 'educations', 'skills'],
+        inject: ['personalDetails','experiences', 'educations', 'skills', 'customSections'],
         data(){
             return {
                 options: { year: 'numeric', month: 'long' },
@@ -127,7 +135,7 @@
         flex-direction: column;
         align-items: center;
         row-gap: 2rem;
-        margin-top:1.5rem;
+        margin-top: 2rem;
     }
 
     /* The page container with an aspect ratio of A4 sized page */

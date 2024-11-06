@@ -6,6 +6,7 @@
       <experience-editor></experience-editor>
       <education-editor></education-editor>
       <skill-editor></skill-editor>
+      <custom-sections-manager></custom-sections-manager>
   </section>
   <section class="preview" v-show="windowWidth > 1100 || showPreview">
         <document-preview 
@@ -26,7 +27,8 @@ export default {
         experiences: this.experiences,
         educations: this.educations,
         personalDetails: this.personalDetails,
-        skills: this.skills
+        skills: this.skills,
+        customSections: this.customSections,
       };
     },
     data() {
@@ -48,6 +50,7 @@ export default {
         photo: null,
         windowWidth: window.innerWidth,
         showPreview: false,
+        customSections: {},
       };
     },
     methods: {
@@ -94,6 +97,7 @@ export default {
     width: 50%;
     height:100vh;
     padding: 3rem;
+    padding-bottom: 5rem;
   }
 
   .editor-container h1{
@@ -113,7 +117,7 @@ export default {
     width:50%;
     overflow-y:auto;
     overflow-x:hidden;
-    background-color: #6d7387;
+    background-color: rgb(131,134,140);
   }
 
   .change-view {
@@ -141,7 +145,8 @@ export default {
       position: static;
       width: 1000%;
       margin: auto;
-      padding: 3rem 10vw;
+      padding: 3rem;
+      padding-bottom: 7rem;
       overflow-y: scroll;
     }
 
