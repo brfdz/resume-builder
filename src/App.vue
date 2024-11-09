@@ -18,6 +18,10 @@
   <base-button class="change-view" @click="toggleViews">
     {{ toggleBtnTitle }}
   </base-button>
+  <base-modal 
+    v-if="showModal"
+    @startStored="retrieveStoredData"
+    @clearData="clearStorage"></base-modal>
 </template>
 
 <script>
@@ -51,6 +55,7 @@ export default {
         windowWidth: window.innerWidth,
         showPreview: false,
         customSections: {},
+        showModal: true,
       };
     },
     methods: {
@@ -59,6 +64,55 @@ export default {
       },
       onWindowResized(){
         this.windowWidth = window.innerWidth;
+      },
+      clearStorage(){
+        localStorage.clear();
+        this.showModal = false;
+      },
+      retrieveStoredData(){
+        this.showModal = false;
+
+        //Retrieve personal details
+        const savedDetails = localStorage.getItem('personalDetails'); 
+        if (savedDetails) {
+          Object.assign(this.personalDetails,JSON.parse(savedDetails));
+        }
+
+        //Retrieve experiences
+        const savedExperiences = localStorage.getItem('experiences');
+        if(savedExperiences) {
+          Object.assign(this.experiences, JSON.parse(savedExperiences));
+        }
+
+        //Retrieve educations
+        const savedEducations = localStorage.getItem('educations');
+        if(savedEducations) {
+          Object.assign(this.educations, JSON.parse(savedEducations));
+        }
+
+        //Retrieve skills
+        const savedSkills = localStorage.getItem('skills');
+        if(savedSkills) {
+          Object.assign(this.skills, JSON.parse(savedSkills));
+        }
+
+        //Retrieve summary
+        const savedSummary = localStorage.getItem('profSummary');
+        if(savedSummary) {
+          this.profSummary = savedSummary;
+        }
+
+        //Retrieve photo
+        const savedPhoto = localStorage.getItem('photo');
+        if(savedPhoto) {
+          this.photo = savedPhoto;
+        }
+
+        //Retrieve custom sections
+        const savedCustom = localStorage.getItem('customSections');
+        if(this.customSections){
+          Object.assign(this.customSections, JSON.parse(savedCustom));
+        }
       }
     },
     computed: {
@@ -68,6 +122,14 @@ export default {
     },
     mounted(){
       window.addEventListener('resize', this.onWindowResized);
+
+      if(localStorage.length > 0){
+        const modal = new bootstrap.Modal('#appModal');
+        modal.show();
+      }
+      else{
+        this.showModal = false;
+      }
     },
     beforeDestroy(){
       window.removeEventListener('resize', this.onWindowResized);

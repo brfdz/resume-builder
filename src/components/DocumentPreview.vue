@@ -52,7 +52,7 @@
 
                     <document-section v-for="(section, key) in customSections" :key="section.id"
                     :header="section.sectionTitle">
-                        <document-section-entry v-for="(item) in section" :key="item.id"
+                        <document-section-entry v-for="(item) in section.sectionList" :key="item.id"
                         :title="item.title" :info="item.info" :entry-start-date="item.startDate" :entry-end-date="item.endDate">
                         {{ item.description }}
                         </document-section-entry>

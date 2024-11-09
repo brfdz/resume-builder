@@ -15,16 +15,14 @@ import CustomSectionEditor from './CustomSectionEditor.vue';
             CustomSectionEditor,
         },
         inject: ['customSections'],
-        data(){
-            return {
-                idCounter: 0,
-            };
-        },
         methods: {
             addNewSection(){
-                const id = 'sect' + this.idCounter++;
-                this.customSections[id] = [];
-                console.log(this.customSections);
+                const id = Date.now().toString();
+                this.customSections[id] = {
+                    sectionTitle: '',
+                    sectionList: [],
+                };
+                localStorage.setItem('customSections', JSON.stringify(this.customSections));
             },
         }
     }

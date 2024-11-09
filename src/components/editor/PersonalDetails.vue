@@ -12,13 +12,14 @@
                                 id="photo-input" 
                                 ref="photoInput"
                                 @change="handlePhotoUpload($event)"> 
-                            <base-button v-show="photoFile" btnType="delete" @click="removePhoto" title="Delete">X</base-button>
+                            <base-button v-show="photo" btnType="delete" @click="removePhoto" title="Delete">X</base-button>
                         </div>
                     </template>
                 </base-input>
                 <!-- other personal details inputs -->
                 <base-input v-for="(item, key) in personalDetails" :key="key"
-                    :inputId="key" @update-value="setPersonalValue($event, key)">
+                    :inputId="key" @update-value="setPersonalValue($event, key)"
+                    :value="personalDetails[key]">
                         {{ formatLabel(key) }}
                 </base-input>
             </base-input-group>
@@ -30,6 +31,11 @@
     export default {
         inject: ['personalDetails'],
         emits: ['update:photo'],
+        props: {
+            photo: {
+                type: String
+            }
+        },
         data(){
             return{
                 photoFile: null,
@@ -38,18 +44,28 @@
         methods: {
             setPersonalValue(value, field){
                 this.personalDetails[field] = value;
+                localStorage.setItem('personalDetails', JSON.stringify(this.personalDetails));
             },
             handlePhotoUpload(e){
                 this.photoFile = e.target.files[0];
-                this.$emit('update:photo',URL.createObjectURL(this.photoFile));
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    const photoURL = reader.result; // Base64 string
+                    localStorage.setItem('photo', photoURL);
+                    this.$emit('update:photo', photoURL);
+                }
+                if (this.photoFile){
+                    reader.readAsDataURL(this.photoFile);
+                }
             },
             removePhoto(){
                 const confirmed = confirm("Are you sure you want to delete photo? This action cannot be undone.");
                 if(confirmed){
-                    URL.revokeObjectURL(this.photoFile);
                     this.photoFile = null;
                     this.$emit('update:photo', null);
                     this.$refs.photoInput.value = null; // Clear file input
+                    localStorage.removeItem('photo');
                 }
             },
             formatLabel(text) {

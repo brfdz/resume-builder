@@ -46,20 +46,19 @@ import CustomInputGroup from './CustomInputGroup.vue';
         },
         data(){
             return{
-                idCounter: 0,
-                sectionTitle: '',
-                itemList: this.customSections[this.sectionId],
+                sectionTitle: this.customSections[this.sectionId]['sectionTitle'],
+                itemList: this.customSections[this.sectionId]['sectionList'],
             };
         }, 
         watch: {
             sectionTitle(value){
-                this.itemList['sectionTitle'] = value;
+                this.customSections[this.sectionId]['sectionTitle'] = value;
             },    
         },    
         methods: {
             addItem(){
                 const item = {
-                        id: this.sectionId + 'item' + this.idCounter++,
+                        id: Date.now().toString(),
                         title: '',
                         startDate: '',
                         endDate: '',
@@ -67,20 +66,24 @@ import CustomInputGroup from './CustomInputGroup.vue';
                         description: ''
                     };
                 this.itemList.push(item);
+                localStorage.setItem('customSections', JSON.stringify(this.customSections));
             },
             updateItemValue(value, inputTitle, index){
                 this.itemList[index][inputTitle] = value;
+                localStorage.setItem('customSections', JSON.stringify(this.customSections));
             },
             deleteItem(deleteIndex){
                 const confirmed = confirm("Are you sure you want to delete this item? This action cannot be undone.");
                 if(confirmed){
                     this.itemList.splice(deleteIndex, 1);
+                    localStorage.setItem('customSections', JSON.stringify(this.customSections));
                 }
             },
             deleteSection(sectionId){
                 const confirmed = confirm("Are you sure you want to delete this section? This action cannot be undone.");
                 if(confirmed){
                     delete this.customSections[sectionId];
+                    localStorage.setItem('customSections', JSON.stringify(this.customSections));
                 }
             }
         },

@@ -5,7 +5,7 @@
             Your Profile
             <template #input>
                 <textarea class="form-control bg-secondary-subtle" id="summary" rows="4" maxlength="2000"
-                    @input="$emit('update:modelValue', $event.target.value)"></textarea>
+                :value=propValue @input="updateSummary($event.target.value)"></textarea>
             </template>
         </base-input>
     </div>
@@ -14,12 +14,28 @@
 <script>
     export default {
         props: {
-            summary: {
+            modelValue: {
                 type: String,
                 default: ''
             }
         },
-        emits: ['update:modelValue']
+        emits: ['update:modelValue'],
+        watch: {
+            modelValue(val){
+                this.propValue = val;
+            },
+        },
+        data(){
+            return {
+                propValue: '',
+            };
+        },
+        methods: {
+            updateSummary(value){
+                this.$emit('update:modelValue', value);
+                localStorage.setItem('profSummary', value);
+            }
+        },
     }
 </script>
 

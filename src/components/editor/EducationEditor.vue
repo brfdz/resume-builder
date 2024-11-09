@@ -34,15 +34,10 @@
                 updateEducationValue: this.updateEducationValue,
             };
         },
-        data(){
-            return{
-                idCounter: 0,
-            };
-        },        
         methods: {
             addEducation(){
                 const newEducation = {
-                        id: 'edu' + this.idCounter++,
+                        id: Date.now().toString(), 
                         school: '',
                         degree: '',
                         startDate: '',
@@ -55,11 +50,13 @@
             },
             updateEducationValue(value, inputTitle, index){
                 this.educations[index][inputTitle] = value;
+                localStorage.setItem('educations', JSON.stringify(this.educations));
             },
             deleteEducation(deleteIndex){
                 const confirmed = confirm("Are you sure you want to delete this item? This action cannot be undone.");
                 if(confirmed){
                     this.educations.splice(deleteIndex, 1);
+                    localStorage.setItem('educations', JSON.stringify(this.educations));
                 }
             }
         },

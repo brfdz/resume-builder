@@ -33,15 +33,10 @@
                 updateExperienceValue: this.updateExperienceValue,
             };
         },
-        data(){
-            return{
-                idCounter: 0,
-            };
-        },        
         methods: {
             addExperience(){
                 const exp = {
-                        id: 'exp' + this.idCounter++,
+                        id: Date.now().toString(),
                         jobTitle: '',
                         employer: '',
                         startDate: '',
@@ -54,11 +49,13 @@
             },
             updateExperienceValue(value, inputTitle, index){
                 this.experiences[index][inputTitle] = value;
+                localStorage.setItem('experiences', JSON.stringify(this.experiences));
             },
             deleteExperience(deleteIndex){
                 const confirmed = confirm("Are you sure you want to delete this item? This action cannot be undone.");
                 if(confirmed){
                     this.experiences.splice(deleteIndex, 1);
+                    localStorage.setItem('experiences', JSON.stringify(this.experiences));
                 }
             }
         },

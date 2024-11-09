@@ -16,6 +16,7 @@ import CustomSectionsManager from './components/editor/CustomSectionsManager.vue
 import BaseInput from './components/editor/BaseInput.vue';
 import BaseInputGroup from './components/editor/BaseInputGroup.vue';
 import BaseButton from './components/BaseButton.vue';
+import BaseModal from './components/BaseModal.vue';
 
 const app = createApp(App);
 
@@ -32,5 +33,6 @@ app.component('custom-sections-manager', CustomSectionsManager);
 app.component('base-input', BaseInput);
 app.component('base-input-group', BaseInputGroup);
 app.component('base-button', BaseButton);
+app.component('base-modal', BaseModal);
 
 app.mount('#app');

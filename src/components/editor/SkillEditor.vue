@@ -37,15 +37,10 @@ import SkillInputGroup from './SkillInputGroup.vue';
                 updateSkillValue: this.updateSkillValue,
             };
         },
-        data(){
-            return{
-                idCounter: 0,
-            };
-        },
         methods: {
             addSkill(){
                 const newSkill = {
-                    id: 'skill' + this.idCounter++,
+                    id: Date.now().toString(),
                     name: '',
                     level: ''
                 }
@@ -53,11 +48,13 @@ import SkillInputGroup from './SkillInputGroup.vue';
             },
             updateSkillValue(value, field, index){
                 this.skills[index][field] = value;
+                localStorage.setItem('skills', JSON.stringify(this.skills));
             },
             deleteSkill(deleteIndex){
                 const confirmed = confirm("Are you sure you want to delete this item? This action cannot be undone.");
                 if(confirmed){
                     this.skills.splice(deleteIndex, 1);
+                    localStorage.setItem('skills', JSON.stringify(this.skills));
                 }
             },
         },
