@@ -16,7 +16,8 @@
                     <div class="accordion-body">
                         <custom-input-group
                             :groupId="item.id"
-                            :groupIndex="index">
+                            :groupIndex="index"
+                            :groupList="itemList">
                     </custom-input-group>
                     </div> 
                 </div>
